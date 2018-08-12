@@ -10,10 +10,6 @@ export class AddContactService {
 
   constructor() {
     this.store = store;
-    this.store.dispatch(addContact({
-      firstName: 'Rahul',
-      lastName: 'Meghlan'
-    }));
     console.log('>>>>>>', this.store.getState());
   }
 

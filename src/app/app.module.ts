@@ -2,17 +2,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AddContactComponent } from './add-contact/add-contact.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+import {AddContactModule} from './add-contact/add-contact.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AddContactComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AddContactModule
   ],
   providers: [],
   bootstrap: [AppComponent]

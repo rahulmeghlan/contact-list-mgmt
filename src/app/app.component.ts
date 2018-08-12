@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AddContactService} from './add-contact.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +6,7 @@ import {AddContactService} from './add-contact.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'humanitec-assignment';
 
-  constructor(private addContactService: AddContactService) {
+  constructor() {
   }
 }
