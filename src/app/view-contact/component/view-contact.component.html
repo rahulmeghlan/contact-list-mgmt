@@ -3,7 +3,7 @@
          (keyup)="applyFilter($event.target.value)"
          placeholder="Filter">
 </mat-form-field>
-<table matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+<table matSort (matSortChange)="applySort($event)" class="mat-elevation-z8">
   <tr>
     <th mat-sort-header="id">ID</th>
     <th mat-sort-header="name">Name</th>
@@ -12,10 +12,10 @@
     <th mat-sort-header="phone">Phone</th>
   </tr>
   <tr *ngFor="let element of dataSource">
-    <td>{{element.contact.id}}</td>
-    <td>{{element.contact.firstName}} {{element.contact.lastName}}</td>
-    <td>{{element.contact.address.street}}</td>
-    <td>{{element.contact.address.country}}</td>
-    <td>{{element.contact.phone}}</td>
+    <td>{{element.id}}</td>
+    <td>{{element.firstName}} {{element.lastName}}</td>
+    <td>{{element.address.street}}</td>
+    <td>{{element.address.country}}</td>
+    <td>{{element.phone}}</td>
   </tr>
 </table>

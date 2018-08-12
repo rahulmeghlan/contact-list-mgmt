@@ -8,7 +8,6 @@ import {Sort} from '@angular/material';
   styleUrls: ['./view-contact.component.scss']
 })
 export class ViewContactComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'address', 'country', 'phone'];
   dataSource: any[];
   orgDataSource: any[];
   filter: string;
@@ -20,6 +19,7 @@ export class ViewContactComponent implements OnInit {
   ngOnInit() {
     this.initDataSource();
     this.initFilterOnDataSource();
+    this.initSortOnDataSource();
   }
 
   initDataSource() {
@@ -28,7 +28,7 @@ export class ViewContactComponent implements OnInit {
   }
 
   initFilterOnDataSource() {
-    const filter = this.viewContactService.storeState.filters && this.viewContactService.storeState.filters.filters;
+    const filter = this.viewContactService.storeState.filters;
     if (filter) {
       this.filter = filter;
       this.applyFilter(filter);
@@ -46,32 +46,47 @@ export class ViewContactComponent implements OnInit {
   }
 
   getConcatenatedRowString(row) {
-    let str = row.contact.id + row.contact.firstName + row.contact.lastName;
-    str += row.contact.email + row.contact.phone + row.contact.address.city;
-    str += row.contact.address.state + row.contact.address.pin + row.contact.address.country;
+    let str = row.id + row.firstName + row.lastName;
+    str += row.email + row.phone + row.address.city;
+    str += row.address.state + row.address.pin + row.address.country;
     return str;
   }
 
-  sortData(sort: Sort) {
+  applySort(sort: Sort) {
+    this.viewContactService.saveSortData({
+      direction: sort.direction,
+      active: sort.active
+    });
+    this.sortDataSource(sort.direction, sort.active);
+  }
+
+  sortDataSource(direction, active) {
     this.dataSource = this.dataSource.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
+      const isAsc = direction === 'asc';
+      switch (active) {
         case 'id':
-          return compare(a.contact.id, b.contact.id, isAsc);
+          return compare(a.id, b.id, isAsc);
         case 'name':
-          const aName = a.contact.firstName + a.contact.lastName;
-          const bName = b.contact.firstName + b.contact.lastName;
+          const aName = a.firstName + a.lastName;
+          const bName = b.firstName + b.lastName;
           return compare(aName, bName, isAsc);
         case 'address':
-          return compare(a.contact.address.street, b.contact.address.street, isAsc);
+          return compare(a.address.street, b.address.street, isAsc);
         case 'country':
-          return compare(a.contact.address.country, b.contact.address.country, isAsc);
+          return compare(a.address.country, b.address.country, isAsc);
         case 'phone':
-          return compare(a.contact.phone, b.contact.phone, isAsc);
+          return compare(a.phone, b.phone, isAsc);
         default:
           return 0;
       }
     });
+  }
+
+  initSortOnDataSource() {
+    const sort = this.viewContactService.storeState.sort;
+    if (sort.direction) {
+      this.sortDataSource(sort.direction, sort.active);
+    }
   }
 }
 

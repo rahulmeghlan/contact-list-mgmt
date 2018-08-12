@@ -11,10 +11,7 @@ export class AddContactService extends ContactService {
   }
 
   saveContact(contact) {
-    this.store.dispatch(addContact({
-      type: ADD_CONTACT,
-      contact
-    }));
+    this.store.dispatch(addContact(contact));
   }
 
 }
