@@ -18,11 +18,11 @@ export class AddContactComponent implements OnDestroy {
 
   constructor(private addContactService: AddContactService, private router: Router) {
     this.contact = {
-      id: 123,
+      id: Date.now().toString(36),
       firstName: '',
       lastName: '',
       email: '',
-      phone: 0,
+      phone: '',
       address: {
         street: '',
         city: '',
