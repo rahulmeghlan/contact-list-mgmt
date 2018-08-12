@@ -34,7 +34,6 @@
 
   <mat-form-field appearance="outline" class="example-full-width">
     <mat-label>Phone</mat-label>
-    <span matPrefix>+49 &nbsp;</span>
     <input type="number" matInput [(ngModel)]="contact.phone"
            name="phone"
            placeholder="Telephone">
@@ -76,7 +75,6 @@
                  [(ngModel)]="contact.address.pin"
                  name="pin"
                  placeholder="Postal Code" value="94043">
-          <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
         </mat-form-field>
       </td>
       <td>
