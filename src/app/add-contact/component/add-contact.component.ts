@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AddContactService} from '../service/add-contact.service';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-contact',
@@ -7,8 +8,13 @@ import {AddContactService} from '../service/add-contact.service';
   styleUrls: ['./add-contact.component.scss']
 })
 export class AddContactComponent implements OnInit {
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
-  constructor(private addContactService: AddContactService) { }
+  constructor(private addContactService: AddContactService) {
+  }
 
   ngOnInit() {
   }
