@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {ViewContactComponent} from './component/view-contact.component';
-import {MatFormFieldModule, MatInputModule, MatTableModule} from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatSortModule} from '@angular/material';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
-  imports: [MatTableModule, MatFormFieldModule, MatInputModule],
+  imports: [MatSortModule, MatFormFieldModule, MatInputModule, CommonModule],
   exports: [ViewContactComponent],
   declarations: [ViewContactComponent]
 })
