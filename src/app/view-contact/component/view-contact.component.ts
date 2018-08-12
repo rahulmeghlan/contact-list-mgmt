@@ -10,8 +10,10 @@ export class ViewContactComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'address', 'country', 'phone'];
   dataSource: any[];
   orgDataSource: any[];
+  filter: string;
 
   constructor(private viewContactService: ViewContactService) {
+    this.filter = '';
   }
 
   ngOnInit() {
@@ -25,25 +27,28 @@ export class ViewContactComponent implements OnInit {
   }
 
   initFilterOnDataSource() {
-    const filter = this.viewContactService.storeState.filter;
+    const filter = this.viewContactService.storeState.filters && this.viewContactService.storeState.filters.filters;
     if (filter) {
+      this.filter = filter;
       this.applyFilter(filter);
     }
   }
 
   applyFilter(filter: string) {
-    if (filter) {
-      this.dataSource = this.orgDataSource.filter((row) => {
-        let str = row.contact.id + row.contact.firstName + row.contact.lastName;
-        str += row.contact.email + row.contact.phone + row.contact.address.city;
-        str += row.contact.address.state + row.contact.address.pin + row.contact.address.country;
-        const pattern = new RegExp(filter, 'g');
-        if (pattern.test(str.toLowerCase())) {
-          this.viewContactService.saveFilter(filter);
-          return row;
-        }
-      });
-    }
+    this.dataSource = this.orgDataSource.filter((row) => {
+      const pattern = new RegExp(filter, 'g');
+      if (pattern.test(this.getConcatenatedRowString(row).toLowerCase())) {
+        this.viewContactService.saveFilter(filter);
+        return row;
+      }
+    });
+  }
+
+  getConcatenatedRowString(row) {
+    let str = row.contact.id + row.contact.firstName + row.contact.lastName;
+    str += row.contact.email + row.contact.phone + row.contact.address.city;
+    str += row.contact.address.state + row.contact.address.pin + row.contact.address.country;
+    return str;
   }
 
 }
