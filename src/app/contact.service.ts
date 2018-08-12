@@ -1,10 +1,9 @@
 import store from 'humanitec-store';
-import {addContact} from 'humanitec-store/actions/add.action';
 
 export class ContactService {
   store;
   unsubscribe;
-  contactList;
+  storeState;
 
   constructor() {
     this.store = store;
@@ -12,14 +11,9 @@ export class ContactService {
     this.subScribeStateUpdates();
   }
 
-  initContactInfo() {
-  }
-
-
   updateContactInfo() {
-    const storeState = this.store.getState();
-    this.contactList = storeState.contactList;
-    localStorage.setItem('contactInfo', JSON.stringify(storeState));
+    this.storeState = this.store.getState();
+    localStorage.setItem('contactInfo', JSON.stringify(this.storeState));
   }
 
   subScribeStateUpdates() {

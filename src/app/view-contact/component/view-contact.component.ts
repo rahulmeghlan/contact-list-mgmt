@@ -14,8 +14,7 @@ export class ViewContactComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = this.viewContactService.contactList;
-    console.log(this.dataSource);
+    this.dataSource = this.viewContactService.storeState.contactList;
   }
 
 }
