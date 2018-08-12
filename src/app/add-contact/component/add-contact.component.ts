@@ -1,22 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AddContactService} from '../service/add-contact.service';
 import {FormControl, Validators} from '@angular/forms';
+import {Contact} from '../../contact';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-contact',
   templateUrl: './add-contact.component.html',
   styleUrls: ['./add-contact.component.scss']
 })
-export class AddContactComponent implements OnInit {
+export class AddContactComponent implements OnDestroy {
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
   ]);
+  contact: Contact;
 
-  constructor(private addContactService: AddContactService) {
+  constructor(private addContactService: AddContactService, private router: Router) {
+    this.contact = {
+      id: 123,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: 0,
+      address: {
+        street: '',
+        city: '',
+        state: '',
+        pin: '',
+        country: ''
+      }
+    };
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.addContactService.unsubscribe();
+  }
+
+  save() {
+    this.addContactService.saveContact(this.contact);
+    this.router.navigate(['/view-contact']);
   }
 
 }

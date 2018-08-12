@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ViewContactService} from '../service/view-contact.service';
 
 export interface PeriodicElement {
   name: string;
@@ -28,7 +29,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class ViewContactComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
-  constructor() {
+
+  constructor(private viewContactService: ViewContactService) {
   }
 
   ngOnInit() {
