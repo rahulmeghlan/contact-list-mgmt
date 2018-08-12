@@ -1,18 +1,13 @@
 import {Injectable} from '@angular/core';
-import store from 'humanitec-store';
 import {ADD_CONTACT, addContact} from 'humanitec-store/actions/add.action';
+import {ContactService} from '../../contact.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddContactService {
-  store;
-  unsubscribe;
-
+export class AddContactService extends ContactService {
   constructor() {
-    this.store = store;
-    console.log('>>>>>>', this.store.getState());
-    this.subScribeStateUpdates();
+    super();
   }
 
   saveContact(contact) {
@@ -21,12 +16,5 @@ export class AddContactService {
       contact
     }));
   }
-
-  subScribeStateUpdates() {
-    this.unsubscribe = this.store.subscribe(() => {
-      console.log('Subscriber: ', this.store.getState());
-    });
-  }
-
 
 }
