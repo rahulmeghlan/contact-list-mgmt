@@ -1,19 +1,29 @@
-<form class="example-form" (ngSubmit)="save()">
+<form class="example-form" #contactForm="ngForm" novalidate (ngSubmit)="save(contactForm)">
   <table class="example-full-width" cellspacing="0">
     <tr>
       <td>
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>First Name</mat-label>
           <input matInput [(ngModel)]="contact.firstName"
+                 required #firstName="ngModel"
                  name="firstName" placeholder="First name">
+          <mat-error *ngIf="firstName.errors && firstName.errors.required">
+            First Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
       </td>
       <td>
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Last Name</mat-label>
           <input matInput [(ngModel)]="contact.lastName"
+                 id="lastName"
                  name="lastName"
+                 required
+                 #lastName="ngModel"
                  placeholder="Last Name">
+          <mat-error *ngIf="lastName.errors && lastName.errors.required">
+            Last Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
       </td>
     </tr>
@@ -21,9 +31,12 @@
 
   <mat-form-field class="example-full-width" appearance="outline">
     <mat-label>Email</mat-label>
-    <input matInput placeholder="Email" [(ngModel)]="contact.email"
-           name="email"
-           [formControl]="emailFormControl"/>
+    <input matInput placeholder="Email"
+           [(ngModel)]="contact.email"
+           required
+           [formControl]="emailFormControl"
+           id="email"
+           name="email"/>
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
       Please enter a valid email address
     </mat-error>
@@ -36,15 +49,26 @@
     <mat-label>Phone</mat-label>
     <input type="number" matInput [(ngModel)]="contact.phone"
            name="phone"
+           #phone="ngModel"
+           required
            placeholder="Telephone">
+    <mat-error *ngIf="phone.errors && phone.errors.required">
+      Phone is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <p>
     <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>Street Address</mat-label>
       <textarea matInput [(ngModel)]="contact.address.street"
+                id="streetAddress"
+                #streetAddress="ngModel"
+                required
                 name="streetAddress"
                 placeholder="Address"></textarea>
+      <mat-error *ngIf="streetAddress.errors && streetAddress.errors.required">
+        Address is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
   </p>
 
@@ -54,16 +78,17 @@
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>City</mat-label>
           <input matInput="contact.address.city"
-                 [(ngModel)]="contact.address.city"
+                 [(ngModel)]="contact.address && contact.address.city"
                  name="city"
-                 placeholder="City">
+                 placeholder="City"/>
         </mat-form-field>
       </td>
       <td>
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>State</mat-label>
-          <input matInput [(ngModel)]="contact.address.state"
-                 name="state" placeholder="State">
+          <input matInput
+                 [(ngModel)]="contact.address && contact.address.state"
+                 name="state" placeholder="State"/>
         </mat-form-field>
       </td>
     </tr>
@@ -72,17 +97,23 @@
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Postal Code</mat-label>
           <input type="number" matInput #postalCode maxlength="5"
-                 [(ngModel)]="contact.address.pin"
+                 [(ngModel)]="contact.address && contact.address.pin"
                  name="pin"
-                 placeholder="Postal Code" value="94043">
+                 placeholder="Postal Code"/>
         </mat-form-field>
       </td>
       <td>
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Country</mat-label>
-          <input matInput [(ngModel)]="contact.address.country"
+          <input matInput [(ngModel)]="contact.address && contact.address.country"
+                 required
+                 id="country"
+                 #country="ngModel"
                  name="country"
                  placeholder="Country">
+          <mat-error *ngIf="country.errors && country.errors.required">
+            Country is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
       </td>
     </tr>

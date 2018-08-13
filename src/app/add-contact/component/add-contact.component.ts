@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 import {AddContactService} from '../service/add-contact.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Contact} from '../../contact';
@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   templateUrl: './add-contact.component.html',
   styleUrls: ['./add-contact.component.scss']
 })
-export class AddContactComponent implements OnDestroy {
+export class AddContactComponent {
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -33,13 +33,11 @@ export class AddContactComponent implements OnDestroy {
     };
   }
 
-  ngOnDestroy() {
-    this.addContactService.unsubscribe();
-  }
-
-  save() {
-    this.addContactService.saveContact(this.contact);
-    this.router.navigate(['/view-contact']);
+  save(form) {
+    if (form.valid) {
+      this.addContactService.saveContact(this.contact);
+      this.router.navigate(['/view-contact']);
+    }
   }
 
 }
