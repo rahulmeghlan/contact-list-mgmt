@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Sort} from '@angular/material';
+import {MatSnackBar, Sort} from '@angular/material';
 import {getContactInfo, saveFilter, saveSortData} from 'humanitec-store';
 import {Router} from '@angular/router';
+import {Contact} from '../../add-contact/Contact/Contact';
 
 @Component({
   selector: 'app-view-contact',
@@ -9,11 +10,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./view-contact.component.scss']
 })
 export class ViewContactComponent implements OnInit {
-  dataSource: any[];
-  orgDataSource: any[];
+  dataSource: Contact[];
+  orgDataSource: Contact[];
   filter: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private snackBar: MatSnackBar) {
     this.filter = '';
   }
 
@@ -22,6 +23,9 @@ export class ViewContactComponent implements OnInit {
     this.initFilterOnDataSource();
     this.initSortOnDataSource();
     if (!this.orgDataSource.length) {
+      this.snackBar.open('No Contacts Available!', 'Please add a contact first.', {
+        duration: 2000
+      });
       this.router.navigate(['/add-contact']);
     }
   }
