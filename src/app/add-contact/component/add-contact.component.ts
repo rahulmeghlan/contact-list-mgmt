@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {AddContactService} from '../service/add-contact.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Contact} from '../Contact/contact';
 import {Router} from '@angular/router';
 import {Address} from '../Contact/Address';
+import {saveContact} from 'humanitec-store';
 
 @Component({
   selector: 'app-add-contact',
@@ -17,7 +17,7 @@ export class AddContactComponent {
   ]);
   contact: Contact;
 
-  constructor(private addContactService: AddContactService, private router: Router) {
+  constructor(private router: Router) {
     this.contact = new Contact(Date.now().toString(36),
       '',
       '',
@@ -28,7 +28,7 @@ export class AddContactComponent {
 
   save(form) {
     if (form.valid) {
-      this.addContactService.saveContact(this.contact);
+      saveContact(this.contact);
       this.router.navigate(['/view-contact']);
     }
   }

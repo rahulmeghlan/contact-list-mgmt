@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ViewContactService} from '../service/view-contact.service';
 import {Sort} from '@angular/material';
+import {getContactInfo, saveFilter, saveSortData} from 'humanitec-store';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-contact',
@@ -12,7 +13,7 @@ export class ViewContactComponent implements OnInit {
   orgDataSource: any[];
   filter: string;
 
-  constructor(private viewContactService: ViewContactService) {
+  constructor(private router: Router) {
     this.filter = '';
   }
 
@@ -20,15 +21,18 @@ export class ViewContactComponent implements OnInit {
     this.initDataSource();
     this.initFilterOnDataSource();
     this.initSortOnDataSource();
+    if (!this.orgDataSource.length) {
+      this.router.navigate(['/add-contact']);
+    }
   }
 
   initDataSource() {
-    this.dataSource = this.viewContactService.storeState.contactList;
+    this.dataSource = getContactInfo().contactList;
     this.orgDataSource = this.dataSource.slice();
   }
 
   initFilterOnDataSource() {
-    const filter = this.viewContactService.storeState.filters;
+    const filter = getContactInfo().filters;
     if (filter) {
       this.filter = filter;
       this.applyFilter(filter);
@@ -39,7 +43,7 @@ export class ViewContactComponent implements OnInit {
     this.dataSource = this.orgDataSource.filter((row) => {
       const pattern = new RegExp(filter, 'g');
       if (pattern.test(this.getConcatenatedRowString(row).toLowerCase())) {
-        this.viewContactService.saveFilter(filter);
+        saveFilter(filter);
         return row;
       }
     });
@@ -53,7 +57,7 @@ export class ViewContactComponent implements OnInit {
   }
 
   applySort(sort: Sort) {
-    this.viewContactService.saveSortData({
+    saveSortData({
       direction: sort.direction,
       active: sort.active
     });
@@ -83,7 +87,7 @@ export class ViewContactComponent implements OnInit {
   }
 
   initSortOnDataSource() {
-    const sort = this.viewContactService.storeState.sort;
+    const sort = getContactInfo().sort;
     if (sort.direction) {
       this.sortDataSource(sort.direction, sort.active);
     }

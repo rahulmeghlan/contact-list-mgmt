@@ -1,9 +1,11 @@
-<mat-form-field>
+<mat-form-field *ngIf="orgDataSource.length">
   <input matInput [value]="filter"
          (keyup)="applyFilter($event.target.value)"
          placeholder="Filter">
 </mat-form-field>
-<table matSort (matSortChange)="applySort($event)" class="mat-elevation-z8">
+<table *ngIf="orgDataSource.length"
+       matSort (matSortChange)="applySort($event)"
+       class="mat-elevation-z8">
   <tr>
     <th mat-sort-header="id">ID</th>
     <th mat-sort-header="name">Name</th>
