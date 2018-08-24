@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {Contact} from '../Contact/contact';
+import {Contact} from '../../Contact/contact';
 import {Router} from '@angular/router';
-import {Address} from '../Contact/Address';
+import {Address} from '../../Contact/Address';
 import {saveContact} from 'humanitec-store';
 
 @Component({
