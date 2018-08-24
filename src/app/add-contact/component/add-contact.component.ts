@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {AddContactService} from '../service/add-contact.service';
 import {FormControl, Validators} from '@angular/forms';
-import {Contact} from '../../contact';
+import {Contact} from '../Contact/contact';
 import {Router} from '@angular/router';
+import {Address} from '../Contact/Address';
 
 @Component({
   selector: 'app-add-contact',
@@ -17,20 +18,12 @@ export class AddContactComponent {
   contact: Contact;
 
   constructor(private addContactService: AddContactService, private router: Router) {
-    this.contact = {
-      id: Date.now().toString(36),
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      address: {
-        street: '',
-        city: '',
-        state: '',
-        pin: '',
-        country: ''
-      }
-    };
+    this.contact = new Contact(Date.now().toString(36),
+      '',
+      '',
+      '',
+      '',
+      new Address('', '', '', '', ''));
   }
 
   save(form) {
