@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatSnackBar, Sort} from '@angular/material';
 import {getContactInfo, saveFilter, saveSortData} from 'humanitec-store';
 import {Router} from '@angular/router';
-import {Contact} from '../../Contact/Contact';
+import {Contact} from '../../Contact/contact';
 
 @Component({
   selector: 'app-view-contact',
