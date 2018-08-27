@@ -39,4 +39,21 @@ describe('ViewContactComponent', () => {
     expect(component.filter).toBe('');
   });
 
+  it('getConcatenatedRowString -> should generate a string concatenating keys of Address Object', () => {
+    const address = {
+      id: 'xxx',
+      firstName: 'xxx',
+      lastName: 'xxx',
+      email: 'xxx',
+      phone: 'xxx',
+      address: {
+        city: 'xxx',
+        state: 'xxx',
+        pin: 'xxx',
+        country: 'xxx'
+      }
+    };
+    expect(component.getConcatenatedRowString(address)).toEqual('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  });
+
 });
