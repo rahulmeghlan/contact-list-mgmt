@@ -7,6 +7,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddContactComponent} from '../../add-contact/component/add-contact.component';
 import {AddContactModule} from '../../add-contact/add-contact.module';
+import {afterEach} from '../../../../node_modules/@types/selenium-webdriver/testing';
 
 
 describe('ViewContactComponent', () => {
@@ -43,21 +44,6 @@ describe('ViewContactComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     spyOn(component.router, 'navigate').and.returnValue(true);
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('init filter to empty string', () => {
-    expect(component.filter).toBe('');
-  });
-
-  it('getConcatenatedRowString -> should generate a string concatenating keys of Address Object', () => {
-    expect(component.getConcatenatedRowString(contactInfo.contactList)).toEqual('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
-  });
-
-  it('sortDataSource should sort the dataSource bases active field', () => {
     component.dataSource = [{
       'id': 'jl8aflvg',
       'firstName': 'abc',
@@ -73,6 +59,19 @@ describe('ViewContactComponent', () => {
       'phone': '1223123',
       'address': {'street': '', 'city': '', 'state': '', 'pin': '', 'country': 'Germany'}
     }];
+    component.orgDataSource = component.dataSource.slice();
+  });
+
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('getConcatenatedRowString -> should generate a string concatenating keys of Address Object', () => {
+    expect(component.getConcatenatedRowString(contactInfo.contactList)).toEqual('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  });
+
+  it('sortDataSource should sort the dataSource bases active field', () => {
     const sorted = [{
       'id': 'jlbqwkbm',
       'firstName': 'ghi',
@@ -90,5 +89,17 @@ describe('ViewContactComponent', () => {
     }];
     component.sortDataSource('desc', 'name');
     expect(component.dataSource).toEqual(sorted);
+  });
+
+  it('applyFilter should update the dataSource basis the filter passed', () => {
+    component.applyFilter('abc');
+    expect(component.dataSource).toEqual([{
+      'id': 'jl8aflvg',
+      'firstName': 'abc',
+      'lastName': 'def',
+      'email': 'abc@gmail.com',
+      'phone': '12313',
+      'address': {'street': 'sdad', 'city': '', 'state': '', 'pin': '', 'country': 'Germany'}
+    }]);
   });
 });
