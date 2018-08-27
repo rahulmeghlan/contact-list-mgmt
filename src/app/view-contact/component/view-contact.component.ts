@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {MatSnackBar, Sort} from '@angular/material';
 import {getContactInfo, saveFilter, saveSortData} from 'humanitec-store';
 import {Router} from '@angular/router';
-import {Contact} from '../../Contact/contact';
 
 @Component({
   selector: 'app-view-contact',
@@ -10,8 +9,8 @@ import {Contact} from '../../Contact/contact';
   styleUrls: ['./view-contact.component.scss']
 })
 export class ViewContactComponent implements OnInit {
-  dataSource: Contact[];
-  orgDataSource: Contact[];
+  dataSource: any[];
+  orgDataSource: any[];
   filter: string;
 
   constructor(public router: Router, private snackBar: MatSnackBar) {

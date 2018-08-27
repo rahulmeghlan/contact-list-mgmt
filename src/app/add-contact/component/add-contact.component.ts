@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {Contact} from '../../Contact/contact';
 import {Router} from '@angular/router';
-import {Address} from '../../Contact/Address';
 import {saveContact} from 'humanitec-store';
 
 @Component({
@@ -15,15 +13,23 @@ export class AddContactComponent {
     Validators.required,
     Validators.email,
   ]);
-  contact: Contact;
+  contact: {};
 
   constructor(private router: Router) {
-    this.contact = new Contact(Date.now().toString(36),
-      '',
-      '',
-      '',
-      '',
-      new Address('', '', '', '', ''));
+    this.contact = {
+      id: Date.now().toString(36),
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: {
+        street: '',
+        city: '',
+        state: '',
+        pin: '',
+        country: ''
+      }
+    };
   }
 
   save(form) {

@@ -7,7 +7,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddContactComponent} from '../../add-contact/component/add-contact.component';
 import {AddContactModule} from '../../add-contact/add-contact.module';
-import {afterEach} from '../../../../node_modules/@types/selenium-webdriver/testing';
 
 
 describe('ViewContactComponent', () => {
