@@ -14,7 +14,7 @@ export class ViewContactComponent implements OnInit {
   orgDataSource: Contact[];
   filter: string;
 
-  constructor(private router: Router, private snackBar: MatSnackBar) {
+  constructor(public router: Router, private snackBar: MatSnackBar) {
     this.filter = '';
   }
 
