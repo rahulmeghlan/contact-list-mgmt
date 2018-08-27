@@ -8,11 +8,25 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AddContactComponent} from '../../add-contact/component/add-contact.component';
 import {AddContactModule} from '../../add-contact/add-contact.module';
 
+
 describe('ViewContactComponent', () => {
   let component: ViewContactComponent;
   let fixture: ComponentFixture<ViewContactComponent>;
   const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
+  const contact = {
+    id: 'xxx',
+    firstName: 'xxx',
+    lastName: 'xxx',
+    email: 'xxx',
+    phone: 'xxx',
+    address: {
+      city: 'xxx',
+      state: 'xxx',
+      pin: 'xxx',
+      country: 'xxx'
+    }
+  };
+  const contactInfo = {contactList: contact, filters: '', sort: {}};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatSortModule, MatFormFieldModule, MatInputModule, CommonModule,
@@ -40,20 +54,41 @@ describe('ViewContactComponent', () => {
   });
 
   it('getConcatenatedRowString -> should generate a string concatenating keys of Address Object', () => {
-    const address = {
-      id: 'xxx',
-      firstName: 'xxx',
-      lastName: 'xxx',
-      email: 'xxx',
-      phone: 'xxx',
-      address: {
-        city: 'xxx',
-        state: 'xxx',
-        pin: 'xxx',
-        country: 'xxx'
-      }
-    };
-    expect(component.getConcatenatedRowString(address)).toEqual('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
+    expect(component.getConcatenatedRowString(contactInfo.contactList)).toEqual('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
   });
 
+  it('sortDataSource should sort the dataSource bases active field', () => {
+    component.dataSource = [{
+      'id': 'jl8aflvg',
+      'firstName': 'abc',
+      'lastName': 'def',
+      'email': 'abc@gmail.com',
+      'phone': '12313',
+      'address': {'street': 'sdad', 'city': '', 'state': '', 'pin': '', 'country': 'Germany'}
+    }, {
+      'id': 'jlbqwkbm',
+      'firstName': 'ghi',
+      'lastName': 'jkl',
+      'email': 'ghi@gmail.com',
+      'phone': '1223123',
+      'address': {'street': '', 'city': '', 'state': '', 'pin': '', 'country': 'Germany'}
+    }];
+    const sorted = [{
+      'id': 'jlbqwkbm',
+      'firstName': 'ghi',
+      'lastName': 'jkl',
+      'email': 'ghi@gmail.com',
+      'phone': '1223123',
+      'address': {'street': '', 'city': '', 'state': '', 'pin': '', 'country': 'Germany'}
+    }, {
+      'id': 'jl8aflvg',
+      'firstName': 'abc',
+      'lastName': 'def',
+      'email': 'abc@gmail.com',
+      'phone': '12313',
+      'address': {'street': 'sdad', 'city': '', 'state': '', 'pin': '', 'country': 'Germany'}
+    }];
+    component.sortDataSource('desc', 'name');
+    expect(component.dataSource).toEqual(sorted);
+  });
 });
